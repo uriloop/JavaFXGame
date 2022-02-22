@@ -1,5 +1,7 @@
 package com.example.javafxgame;
 
+import com.example.javafxgame.client.Client;
+import com.example.javafxgame.data.Player;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -20,6 +22,9 @@ public class TheGameMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+
+
+
         stage.setTitle("JavaFX Game");
         stage.setHeight(viewPortY);
         stage.setWidth(viewPortX);
@@ -33,13 +38,15 @@ public class TheGameMain extends Application {
 
         Image sun   = new Image( "aburrido.png", 100,100,true,true );
         Image space = new Image("spaceBack.png",viewPortX,viewPortY,false,true);
-        Image earth = new Image( "flapbird.png" );
+
 
         final long startNanoTime = System.nanoTime();
         GraphicsContext gc = canvas.getGraphicsContext2D();
-
+        Client client= new Client("localhost",5555);
+        client.run();
         new AnimationTimer()
         {
+
             public void handle(long currentNanoTime)
             {
                 double t = (currentNanoTime - startNanoTime) / 1000000000.0;
@@ -49,25 +56,20 @@ public class TheGameMain extends Application {
 
                 // background image clears canvas
                 gc.drawImage( space, 0, 0 );
-                gc.drawImage( earth, x, y );
-                gc.drawImage( sun,viewPortX/2-sun.getWidth()/2, viewPortY/2-sun.getHeight()/2 );
+                gc.drawImage(sun,client.getPlayer().getPosX(),client.getPlayer().getPosY());
+                stage.show();
             }
         }.start();
-
+       /* gc.drawImage(space,0,0);
         gc.setFill( Color.RED );
         gc.setStroke( Color.BLACK );
         gc.setLineWidth(2);
         Font theFont = Font.font( "Times New Roman", FontWeight.BOLD, 48 );
         gc.setFont( theFont );
         gc.fillText( "Hello, World!", viewPortX/2-130, 50 );
-        gc.strokeText( "Hello, World!", viewPortX/2-130, 50 );
+        gc.strokeText( "Hello, World!", viewPortX/2-130, 50 );*/
 
 
-/*
-        gc.drawImage( earth, viewPortX/2-earth.getWidth()/2, viewPortY/2-earth.getHeight()/2 );
-*/
-
-        stage.show();
     }
 
     public static void main(String[] args) {
