@@ -6,7 +6,7 @@ import java.util.List;
 /**
  *  Classe que instancia totes les variables del joc. Basicament actualitza els estats dels jugadors i s'encarrega dels mapejos
  */
-public class EstatJoc {
+public class EstatJoc{
 
     boolean comenca=false;
     List<Player> players;

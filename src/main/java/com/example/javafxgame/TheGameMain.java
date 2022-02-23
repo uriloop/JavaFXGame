@@ -1,73 +1,156 @@
 package com.example.javafxgame;
 
-import com.example.javafxgame.client.Client;
+import com.example.javafxgame.client.Sprite;
 import com.example.javafxgame.data.Player;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.scene.Group;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.image.Image;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class TheGameMain extends Application {
 
-    float viewPortX=1200;
-    float viewPortY=800;
+    private double cicles = 0;
 
+    float viewPortX = 1200;
+    float viewPortY = 800;
+
+    private Pane root = new Pane();
+    private int margeJugadors = 25;
+    private boolean carrega;
+
+    private Parent createContent() {
+        root.setPrefSize(viewPortX, viewPortY);
+        root.getChildren().add(player);
+
+
+        AnimationTimer timer = new AnimationTimer() {
+            @Override
+            public void handle(long l) {
+                update();
+            }
+        };
+        timer.start();
+
+        return root;
+    }
+
+    private void update() {
+
+        sprites().stream()
+                .filter(s -> s.getType().equals("atac"))
+                .filter(s -> s.getDireccio() == Player.Direccio.S)
+                .forEach(Sprite::moveDown);
+
+        sprites().stream()
+                .filter(s -> s.getType().equals("atac"))
+                .filter(s -> s.getDireccio() == Player.Direccio.N)
+                .forEach(Sprite::moveUp);
+        sprites().stream()
+                .filter(s -> s.getType().equals("atac"))
+                .filter(s -> s.getDireccio() == Player.Direccio.W)
+                .forEach(Sprite::moveLeft);
+        sprites().stream()
+                .filter(s -> s.getType().equals("atac"))
+                .filter(s -> s.getDireccio() == Player.Direccio.E)
+                .forEach(Sprite::moveRight);
+        sprites().stream()
+                .filter(sprite -> sprite.getType().equals("atac"))
+                .forEach(atac -> {
+                    if(atac.getBoundsInParent().intersects(player.getBoundsInParent())){
+                        player.setDead(true);
+
+                    }
+                });
+
+        // eliminar atacs que han sortit del joc per cada costat de la pantalla :  només els poso a DEAD=true;
+
+        sprites().stream()
+                .filter(s -> !s.getType().equals("player"))
+                .filter(s -> s.getTranslateY() + s.getHeight() < 0 || s.getTranslateY() - s.getHeight() > viewPortY
+                        || s.getTranslateX() + s.getWidth() < 0 || s.getTranslateX() - s.getWidth() < viewPortX)
+                .forEach(s -> s.setDead(true));
+
+        // Esborrar els Sprites que estan DEAD=true
+
+
+        cicles++;
+
+    }
+
+    private Sprite player = new Sprite("player", Color.BLUE, 150, 100, 60, 90, Player.Direccio.S, 20);
+
+    private List<Sprite> sprites() {
+        return root.getChildren().stream().map(n -> (Sprite) n).collect(Collectors.toList());
+    }
+
+
+    double ciclesDispar;
 
     @Override
     public void start(Stage stage) throws Exception {
 
+        Scene scene = new Scene(createContent());
 
+        scene.setOnKeyPressed(e -> {
+            switch (e.getCode()) {
+                case A -> {
+                    if (player.getDireccio() != Player.Direccio.W) {
+                        player.setDireccio(Player.Direccio.W);
+                    } else {
+                        if (player.getTranslateX() - margeJugadors > 0)
+                            player.moveLeft();
+                    }
 
-        stage.setTitle("JavaFX Game");
-        stage.setHeight(viewPortY);
-        stage.setWidth(viewPortX);
-        Group root = new Group();
-        Scene theScene = new Scene( root );
-        stage.setScene( theScene );
+                }
+                case D -> {
+                    if (player.getDireccio() != Player.Direccio.E) {
+                        player.setDireccio(Player.Direccio.E);
+                    } else {
+                        if (player.getTranslateX() + player.getWidth() + margeJugadors < viewPortX)
 
-        Canvas canvas = new Canvas( viewPortX, viewPortY );
-        root.getChildren().add( canvas );
+                            player.moveRight();
+                    }
+                }
+                case W -> {
+                    if (player.getDireccio() != Player.Direccio.N) {
+                        player.setDireccio(Player.Direccio.N);
+                    } else {
+                        if (player.getTranslateY() - (float) margeJugadors * 0.8 > 0)
+                            player.moveUp();
+                    }
+                }
+                case S -> {
+                    if (player.getDireccio() != Player.Direccio.S) {
+                        player.setDireccio(Player.Direccio.S);
+                    } else {
+                        if (player.getTranslateY() + player.getHeight() + margeJugadors < viewPortY)
+                            player.moveDown();
 
-
-        Image sun   = new Image( "aburrido.png", 100,100,true,true );
-        Image space = new Image("spaceBack.png",viewPortX,viewPortY,false,true);
-
-
-        final long startNanoTime = System.nanoTime();
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        Client client= new Client("localhost",5555);
-        client.run();
-        new AnimationTimer()
-        {
-
-            public void handle(long currentNanoTime)
-            {
-                double t = (currentNanoTime - startNanoTime) / 1000000000.0;
-
-                double x = 232 + viewPortX/2 * Math.cos(t);
-                double y = 232 + viewPortY/2 * Math.sin(t);
-
-                // background image clears canvas
-                gc.drawImage( space, 0, 0 );
-                gc.drawImage(sun,client.getPlayer().getPosX(),client.getPlayer().getPosY());
-                stage.show();
+                    }
+                }
+                case COMMA -> {
+                    if (cicles - ciclesDispar > 150 /*&& carrega*/) {
+                        /*carrega=false;*/
+                        ciclesDispar = cicles;
+                        Sprite s = player.atacar(player);
+                        root.getChildren().add(s);
+                    }/*else if(!carrega){
+                        player.carregar(player);
+                        carrega=true;
+                    }*/
+                }
             }
-        }.start();
-       /* gc.drawImage(space,0,0);
-        gc.setFill( Color.RED );
-        gc.setStroke( Color.BLACK );
-        gc.setLineWidth(2);
-        Font theFont = Font.font( "Times New Roman", FontWeight.BOLD, 48 );
-        gc.setFont( theFont );
-        gc.fillText( "Hello, World!", viewPortX/2-130, 50 );
-        gc.strokeText( "Hello, World!", viewPortX/2-130, 50 );*/
+        });
+
+
+        stage.setScene(scene);
+        stage.show();
 
 
     }
