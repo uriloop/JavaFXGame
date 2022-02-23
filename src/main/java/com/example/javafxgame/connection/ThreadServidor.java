@@ -5,6 +5,7 @@ import com.example.javafxgame.data.Player;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class ThreadServidor implements Runnable{
 
@@ -38,7 +39,7 @@ public class ThreadServidor implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("Conexió establerta per al player");
+        System.out.println("Conexió establerta per a un player");
         try {
             // primer missatge onb li passem el id al player
             msgSortint= String.valueOf(idPropia);
@@ -53,9 +54,7 @@ public class ThreadServidor implements Runnable{
                 out.flush();
                 msgEntrant = in.readLine();
                 // tracta les dades dels diferents clients per mdificar l'objecte mapa
-
                 // envia json mapa al client (a cada client)
-
             }
         }catch(IOException e){
             System.out.println(e.getLocalizedMessage());
@@ -74,12 +73,12 @@ public class ThreadServidor implements Runnable{
             System.out.println(msgEntrant);
             estatJoc.getPlayers().add(new Player(idPropia,100,100, Player.Direccio.S));
         }else{
-            estatJoc.actualitzaPlayer(msgEntrant);
+            /*estatJoc.actualitzaPlayer(msgEntrant);*/
         }
 
+        System.out.println("Rebut del client: "+msgEntrant);
 
-
-        return estatJoc.mapejar();
+        return /*estatJoc.mapejar()*/new Scanner(System.in).nextLine();
     }
 
 }

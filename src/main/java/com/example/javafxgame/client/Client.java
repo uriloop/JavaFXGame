@@ -7,11 +7,12 @@ import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
 
 import com.example.javafxgame.data.EstatJoc;
 import com.example.javafxgame.data.Player;
 
-public class Client {
+public class Client extends Thread {
 
     String hostname;
     int port;
@@ -88,13 +89,14 @@ try {
 
     public String getRequest(String recivedDataFromServer) {
 
-        String responseFromClientToServer;
+        System.out.println("Rebut: "+recivedDataFromServer);
+        /*String responseFromClientToServer;*/
         /*try {
            estatJoc = new ObjectMapper().readValue(recivedDataFromServer, EstatJoc.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }*/
-        return "aki retorna un json del player cap al servidor";
+        return new Scanner(System.in).nextLine();
 
         /*try {
             responseFromClientToServer = new ObjectMapper().writeValueAsString(playerClient);

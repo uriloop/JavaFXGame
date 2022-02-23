@@ -44,6 +44,7 @@ public class Servidor {
             }
         } catch (IOException ex) {
             ex.printStackTrace();
+
         }
         try {
             clientSocket.close();
@@ -51,6 +52,7 @@ public class Servidor {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public static void main(String[] args) {
