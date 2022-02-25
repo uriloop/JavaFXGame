@@ -65,6 +65,23 @@ public Sprite(String type, Color color, int x, int y, int w, int h, Player.Direc
         setTranslateY(getTranslateY() + velMoviment);
     }
 
+
+    public void moveLeftUp() {
+        setTranslateY(getTranslateY() - velMoviment);
+        setTranslateX(getTranslateX() - velMoviment);
+    }
+    public void moveLeftDown() {
+        setTranslateY(getTranslateY() + velMoviment);
+        setTranslateX(getTranslateX() - velMoviment);    }
+    public void moveRightUp() {
+        setTranslateY(getTranslateY() - velMoviment);
+        setTranslateX(getTranslateX() + velMoviment);    }
+    public void moveRightDown() {
+        setTranslateY(getTranslateY() + velMoviment);
+        setTranslateX(getTranslateX() + velMoviment);    }
+
+
+
     public Sprite atacar(Sprite sprite) {
 
 
