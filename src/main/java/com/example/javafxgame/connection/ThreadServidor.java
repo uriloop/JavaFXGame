@@ -74,6 +74,8 @@ public class ThreadServidor implements Runnable {
 
             }
             msgEntrant = in.readLine();
+
+            // aki enviem missatges per comprovar que la comunicació segueix en peu, realment només cal no respondre y dins del while comprovar només si ja estan llestos els jugadors
             while (msgEntrant.equals("Espero...")){
                 System.out.println("i. "+msgEntrant);
                 msgSortint=comprovaJugadorsPreparats() ? estatJoc.getJSON(): "Espera...";
