@@ -7,7 +7,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
 
-public class ThreadServidor implements Runnable{
+public class ThreadServidor implements Runnable {
 
 // com comunico el serverThread amb el server per compartir les dades dels players???????
     // Que arranca que???? el servidor va apart, només escolta.
@@ -21,11 +21,12 @@ public class ThreadServidor implements Runnable{
     boolean acabat;
     EstatJoc estatJoc;
     int idPropia;
+    String nick;
 
 
     public ThreadServidor(Socket clientSocket, EstatJoc estatJoc, int numplayersConectats) {
-        idPropia=numplayersConectats;
-        this.estatJoc=estatJoc;
+        idPropia = numplayersConectats;
+        this.estatJoc = estatJoc;
         this.clientSocket = clientSocket;
         acabat = false;
         try {
@@ -39,24 +40,44 @@ public class ThreadServidor implements Runnable{
 
     @Override
     public void run() {
-        System.out.println("Conexió establerta per a un player");
+        System.out.println("Conexió establerta");
         try {
-            // primer missatge onb li passem el id al player
-            msgSortint= String.valueOf(idPropia);
+            // primer missatge on li passem el num de player per determinar la posició inicial i el color
+            msgSortint = String.valueOf(idPropia);
             out.println(msgSortint);
             out.flush();
+
+            // arriba = "Conectat!NickName"
             msgEntrant = in.readLine();
 
-            while(!acabat) {
-                // rep la posició del player
-                msgSortint= generarResposta(msgEntrant);
+            if ((msgEntrant.substring(0, 9)).equals("Conectat!")) {
+// Comprova si és el primer missatge de benvinguda i guarda el nickname
+
+                if (msgEntrant.length() > 9) {
+                    nick = msgEntrant.substring(9, msgEntrant.length());
+                } else {
+                    nick = "Player" + (idPropia + 1);
+                }
+                if (idPropia == 0)
+                    estatJoc.getPlayers().add(new Player(nick, 100, 100, Player.Direccio.S));
+                else
+                    estatJoc.getPlayers().add(new Player(nick, 100, 600, Player.Direccio.S));
+
+                msgSortint = "Has entrat a una partida "+nick+" Esperant a l'altre jugador..." ;
                 out.println(msgSortint);
                 out.flush();
                 msgEntrant = in.readLine();
-                // tracta les dades dels diferents clients per mdificar l'objecte mapa
-                // envia json mapa al client (a cada client)
             }
-        }catch(IOException e){
+
+            while (!acabat) {
+
+                msgSortint = generarResposta(msgEntrant);
+                out.println(msgSortint);
+                out.flush();
+                msgEntrant = in.readLine();
+                // bucle de missatges
+            }
+        } catch (IOException e) {
             System.out.println(e.getLocalizedMessage());
         }
         try {
@@ -66,19 +87,15 @@ public class ThreadServidor implements Runnable{
         }
     }
 
+    // juntar tots els msgEntrants dels diferents jugadors, posar en comu i retornar el json amb les posicions
     private String generarResposta(String msgEntrant) {
-        // junta tots els msgEntrants dels diferents jugadors, els posa en comu i retorna el json amb les posicions
 
-        if(msgEntrant.equals("Conectat!")){
-            System.out.println(msgEntrant);
-            estatJoc.getPlayers().add(new Player(idPropia,100,100, Player.Direccio.S));
-        }else{
-            /*estatJoc.actualitzaPlayer(msgEntrant);*/
-        }
 
-        System.out.println("Rebut del client: "+msgEntrant);
+        estatJoc.actualitzaJoc(idPropia, msgEntrant);
 
-        return /*estatJoc.mapejar()*/new Scanner(System.in).nextLine();
+        // per monitoritzar el que passa al servidor
+        System.out.println("Rebut de jug_" + nick + ": " + msgEntrant);
+
+        return /*estatJoc.mapejar()*//*de moment és un xat */new Scanner(System.in).nextLine();
     }
-
 }

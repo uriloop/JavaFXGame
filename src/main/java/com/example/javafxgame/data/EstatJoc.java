@@ -8,11 +8,17 @@ import java.util.List;
  */
 public class EstatJoc{
 
+    Missatge missatge;
+
     boolean comenca=false;
     List<Player> players;
 
+    List<BalaEvent> balesDisparades= new ArrayList<>();
+
+
     public EstatJoc() {
        players=new ArrayList<>();
+
     }
 
 
@@ -30,7 +36,7 @@ public class EstatJoc{
      *
      * @param msgEntrant Json amb l'estat del player client
      */
-    public void actualitzaPlayer(String msgEntrant) {
+    public void actualitzaPlayers(String msgEntrant) {
         // mapejar el json a player i a traves de la id igualar aquest player al player pertinent
 
 
@@ -43,6 +49,31 @@ public class EstatJoc{
         // mapejar l'estat del joc a string json i retornar
 
         return "json de l'estat del joc";
+
+    }
+
+    public boolean getComenca() {
+        return comenca;
+    }
+
+    public void actualitzaJoc(int idPropia, String msgEntrant) {
+       // players.get(idPropia); // ja tenim el player a qui pertany y el json
+
+
+
+
+
+
+
+        /*if (idPropia==0){
+            // mapejar el json a que? no em serveix el player (xq rebo més coses) no em serveix el estat de joc o si?
+            json.getPlayerInfo(0,msgEntrant,players.get(1));
+
+        }
+        else {
+            json.getPlayerInfo(1, msgEntrant, players.get(0));
+
+        }*/
 
     }
 }

@@ -1,5 +1,6 @@
 package com.example.javafxgame;
 
+import com.example.javafxgame.client.Client;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -15,12 +16,11 @@ import java.util.ResourceBundle;
 
 public class NickController implements Initializable {
 
-    User user;
     private Parent root;
     private Stage stage;
     private Scene scene;
 
-    String nick="";
+    private String nick="";
 
     @FXML
     TextField nomField;
@@ -40,7 +40,39 @@ public class NickController implements Initializable {
     private void startMenuSala() {
        nick=nomField.getText();
 
-       user= new User(nick,0,0);
+
+        Client client= new Client("localhost",5555,nick);
+
+        client.run();
+
+       TheGameMain game= new TheGameMain(client);
+       int i=0;
+       while (!client.getEstatJoc().getComenca()){
+           if (i%100==0)System.out.print("-");
+           i++;
+       }
+
+        try {
+            game.start(stage);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+        /*FXMLLoader loader = new FXMLLoader(MenuController.class.getResource("menu.fxml"));
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        stage = (Stage) startButton.getScene().getWindow();
+        scene = new Scene(root, 800, 550);
+        scene.getStylesheets().add(GameMain.class.getResource(GameMain.theme).toExternalForm());
+        stage.setScene(scene);
+        stage.show();*/
+        /*
+        ///////  Aixó pel lobby, de moment tiro milles a lo bàsic
 
         FXMLLoader loader = new FXMLLoader(MenuController.class.getResource("menu.fxml"));
         try {
@@ -52,6 +84,6 @@ public class NickController implements Initializable {
         scene = new Scene(root, 800, 550);
         scene.getStylesheets().add(GameMain.class.getResource(GameMain.theme).toExternalForm());
         stage.setScene(scene);
-        stage.show();
+        stage.show();*/
     }
 }

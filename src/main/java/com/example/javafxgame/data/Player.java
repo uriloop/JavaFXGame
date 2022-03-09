@@ -3,7 +3,7 @@ package com.example.javafxgame.data;
 public class Player {
 
     float posY, posX;
-    int id;
+    String id;
 
 
     private Direccio direccio;
@@ -13,7 +13,7 @@ public class Player {
 
 
 
-    public Player(int id, float posY, float posX, Direccio direccio) {
+    public Player(String id, float posY, float posX, Direccio direccio) {
         this.id=id;
         this.posY = posY;
         this.posX = posX;
@@ -32,7 +32,9 @@ public class Player {
         return direccio;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
+
+
 }

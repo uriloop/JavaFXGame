@@ -27,7 +27,8 @@ public class MenuController implements Initializable {
     ListView<String> llista_usuaris;
 
 
-    Client client= new Client("localhost", 5555);
+    String nick= "";
+    Client client= new Client("localhost", 5555,nick);
 
 
 

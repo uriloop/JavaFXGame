@@ -10,6 +10,7 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 
 import com.example.javafxgame.data.EstatJoc;
+import com.example.javafxgame.data.JsonClass;
 import com.example.javafxgame.data.Player;
 
 public class Client extends Thread {
@@ -19,16 +20,19 @@ public class Client extends Thread {
     boolean continueConnected;
     Player player;
     EstatJoc estatJoc;
+    String nick;
+    JsonClass json;
 
     public EstatJoc getEstatJoc() {
         return estatJoc;
     }
 
-    public Client(String hostname, int port) {
+    public Client(String hostname, int port,String nick) {
         this.hostname = hostname;
         this.port = port;
         continueConnected = true;
         estatJoc= new EstatJoc();
+        this.nick=nick;
 
 /*
  game=new TheGameMain();
@@ -61,9 +65,17 @@ try {
             // Tractem el primer missatge on rebem la id del player i el creem
             serverData = in.readLine();
             //processament de les dades rebudes i obtenció d'una nova petició
-            player= new Player(Integer.parseInt(serverData),100,100, Player.Direccio.S);
-            System.out.println("Conexió establerta amb el servidor. Ets el player "+serverData);
-            request="Conectat!";
+            if (serverData.equals("0")){
+                player= new Player(nick, 100,100, Player.Direccio.S);
+                System.out.println("Conexió establerta amb el servidor. Ets el player 1");
+            }else if (serverData.equals("1")){
+                player= new Player(nick, 100,600, Player.Direccio.S);
+                System.out.println("Conexió establerta amb el servidor. Ets el player 2");
+            }else{
+                System.out.println("T'has deixat una opció possible sense gestionar!!  Client.class");
+            }
+
+            request="Conectat!"+nick;
             out.println(request);
             out.flush();
 
@@ -89,14 +101,17 @@ try {
 
     public String getRequest(String recivedDataFromServer) {
 
-        System.out.println("Rebut: "+recivedDataFromServer);
+        // monitoritzar el que rebem del servidor
+        System.out.println("Rebut del servidor: "+recivedDataFromServer);
         /*String responseFromClientToServer;*/
         /*try {
            estatJoc = new ObjectMapper().readValue(recivedDataFromServer, EstatJoc.class);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }*/
-        return new Scanner(System.in).nextLine();
+
+
+        return  new Scanner(System.in).nextLine();
 
         /*try {
             responseFromClientToServer = new ObjectMapper().writeValueAsString(playerClient);
@@ -140,7 +155,6 @@ try {
                 socket.close();
             }
         } catch (IOException ex) {
-            //enregistrem l'error amb un objecte Logger
             ex.printStackTrace();
         }
     }

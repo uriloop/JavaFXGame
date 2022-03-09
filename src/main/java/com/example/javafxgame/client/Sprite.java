@@ -7,8 +7,8 @@ import javafx.scene.shape.Rectangle;
 public class Sprite extends Rectangle {
 
 
-    private int velMoviment= 2;
-    int altura=20;
+    protected int velMoviment= 2;
+    protected int altura=20;
 
     public Sprite(String type, Color color, int x, int y, int w, int h) {
         super(w,h,color);
@@ -27,9 +27,9 @@ public class Sprite extends Rectangle {
         return dead;
     }
 
-    boolean dead = false;
+    private boolean dead = false;
     private String type=null;
-    Player.Direccio direccio = Player.Direccio.S;
+    private Player.Direccio direccio = Player.Direccio.S;
 
     public Sprite(String type, Color color, int x, int y, int w, int h, Player.Direccio direccio) {
         super(w, h, color);

@@ -33,6 +33,10 @@ public class TheGameMain extends Application {
 
     private List<String> input = new ArrayList<>();
 
+    public TheGameMain( Client client) {
+        this.client=client;
+    }
+
     private Parent createContent() {
         root.setPrefSize(viewPortX, viewPortY);
         root.getChildren().add(player);
@@ -278,8 +282,7 @@ public class TheGameMain extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        client = new Client("localhost", 5555);
-        client.start();
+
         Scene scene = new Scene(createContent());
 
 
@@ -354,10 +357,10 @@ e.get¡¡
 
     }
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
 
 
         launch();
 
-    }
+    }*/
 }

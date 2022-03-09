@@ -11,8 +11,10 @@ import java.io.IOException;
 
 public class GameMain extends Application {
     public static String theme= "styles/darcula.css";
+    private static Stage stage;
     @Override
     public void start(Stage stage) throws IOException {
+        this.stage=stage;
         FXMLLoader fxmlLoader = new FXMLLoader(GameMain.class.getResource("com_et_dius.fxml"));
         Parent root= fxmlLoader.load();
         Scene scene = new Scene(root, 300, 156);
@@ -24,9 +26,10 @@ public class GameMain extends Application {
 
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
 
         launch();
+
     }
 
 
