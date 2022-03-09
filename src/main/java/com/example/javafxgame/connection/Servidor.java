@@ -41,10 +41,10 @@ public class Servidor {
                 //Llançar Thread per establir la comunicació
                 playersConectats.add(new ThreadServidor(clientSocket, estatJoc,numplayersConectats,partidaLlesta));
                 clients.add(new Thread(playersConectats.get(numplayersConectats)));
-                partidaLlesta.setPlayersConectats(numplayersConectats);
+                partidaLlesta.setPlayersConectats(numplayersConectats+1);
                 clients.get(numplayersConectats).start();
                 numplayersConectats++;
-                // si ja estan els dos conectats comença el joc ja veuré com cambiar-ho per a emparellar i posar més usuaris,   he d'esborrar-los si hi ha menys
+                // si ja estan els dos conectats comença el joc, ja veuré com cambiar-ho per a emparellar i posar més usuaris,   he d'esborrar-los si hi ha menys
 
 
             }

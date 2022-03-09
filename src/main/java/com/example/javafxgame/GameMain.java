@@ -21,12 +21,13 @@ public class GameMain extends Application {
         scene.getStylesheets().add(getClass().getResource(theme).toExternalForm());
         stage.setTitle("The Game");
         stage.setScene(scene);
-       // stage.getIcons().add(new Image(getClass().getResource("img/aburrido.png").toExternalForm()));
+       // stage.getIcons().add(new Image(getResource("com/example/javafxgame/img/aburrido.png")));
         stage.show();
 
     }
 
-    public static void main(String[] args) throws Exception {
+
+    public static void main(String[] args) {
 
         launch();
 
