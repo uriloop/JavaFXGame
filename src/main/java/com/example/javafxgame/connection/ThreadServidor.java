@@ -40,16 +40,16 @@ public class ThreadServidor implements Runnable {
 
     @Override
     public void run() {
-        System.out.println("Conexió establerta");
+        System.out.println("i. Conexió establerta");
         try {
             // primer missatge on li passem el num de player per determinar la posició inicial i el color
             msgSortint = String.valueOf(idPropia);
             out.println(msgSortint);
             out.flush();
-
+            System.out.println("o. "+msgSortint);
             // arriba = "Conectat!NickName"
             msgEntrant = in.readLine();
-
+            System.out.println("i. "+msgEntrant);
             if ((msgEntrant.substring(0, 9)).equals("Conectat!")) {
 // Comprova si és el primer missatge de benvinguda i guarda el nickname
 
@@ -63,14 +63,14 @@ public class ThreadServidor implements Runnable {
                 else
                     estatJoc.getPlayers().add(new Player(nick, 100, 600, Player.Direccio.S));
 
-                msgSortint = "Has entrat a una partida "+nick+" Esperant a l'altre jugador..." ;
+                msgSortint = "Has entrat a una partida " + nick + " Esperant a l'altre jugador...";
                 out.println(msgSortint);
                 out.flush();
+                System.out.println("o. "+msgSortint);
                 msgEntrant = in.readLine();
             }
 
             while (!acabat) {
-
                 msgSortint = generarResposta(msgEntrant);
                 out.println(msgSortint);
                 out.flush();
@@ -91,11 +91,13 @@ public class ThreadServidor implements Runnable {
     private String generarResposta(String msgEntrant) {
 
 
-        estatJoc.actualitzaJoc(idPropia, msgEntrant);
+        estatJoc.actualitzaServidor(idPropia, msgEntrant);
+        String resposta = estatJoc.getJSON();
 
         // per monitoritzar el que passa al servidor
-        System.out.println("Rebut de jug_" + nick + ": " + msgEntrant);
+        System.out.println("i.  jug_" + nick + ": " + msgEntrant);
+        System.out.println("o. to_jug_"+nick + ": " + resposta);
 
-        return /*estatJoc.mapejar()*//*de moment és un xat */new Scanner(System.in).nextLine();
+        return resposta;//new Scanner(System.in).nextLine();
     }
 }

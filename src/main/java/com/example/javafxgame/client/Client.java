@@ -21,6 +21,7 @@ public class Client extends Thread {
     Player player;
     EstatJoc estatJoc;
     String nick;
+    private int id;
     JsonClass json;
 
     public EstatJoc getEstatJoc() {
@@ -33,6 +34,7 @@ public class Client extends Thread {
         continueConnected = true;
         estatJoc= new EstatJoc();
         this.nick=nick;
+
 
 /*
  game=new TheGameMain();
@@ -64,22 +66,35 @@ try {
 
             // Tractem el primer missatge on rebem la id del player i el creem
             serverData = in.readLine();
-            //processament de les dades rebudes i obtenció d'una nova petició
+            System.out.println("i. "+serverData);
+
             if (serverData.equals("0")){
+                this.id=0;
                 player= new Player(nick, 100,100, Player.Direccio.S);
                 System.out.println("Conexió establerta amb el servidor. Ets el player 1");
             }else if (serverData.equals("1")){
+                this.id=1;
                 player= new Player(nick, 100,600, Player.Direccio.S);
                 System.out.println("Conexió establerta amb el servidor. Ets el player 2");
             }else{
                 System.out.println("T'has deixat una opció possible sense gestionar!!  Client.class");
             }
-
+            // enviem el nick
             request="Conectat!"+nick;
             out.println(request);
             out.flush();
+            System.out.println("o. "+request);
+
+            // revem segon missatge d'espera
+            serverData= in.readLine();
+            System.out.println("i. "+serverData);
+
+            // confirmem que esperem
+            request= "Espero...";
+            System.out.println("o. "+request);
 
             //el client atén el port fins que decideix finalitzar
+            // comencem a enviar json de l'estat del joc quan hi hagi dos players i iniciem joc
             while (continueConnected) {
                 serverData = in.readLine();
                 //processament de les dades rebudes i obtenció d'una nova petició
@@ -101,8 +116,10 @@ try {
 
     public String getRequest(String recivedDataFromServer) {
 
+        estatJoc.actualitzaClient(id,recivedDataFromServer);
+        String resposta=estatJoc.getJSON();
         // monitoritzar el que rebem del servidor
-        System.out.println("Rebut del servidor: "+recivedDataFromServer);
+        System.out.println("i.  "+recivedDataFromServer);
         /*String responseFromClientToServer;*/
         /*try {
            estatJoc = new ObjectMapper().readValue(recivedDataFromServer, EstatJoc.class);
@@ -110,7 +127,7 @@ try {
             e.printStackTrace();
         }*/
 
-
+        System.out.println("o. "+resposta);
         return  new Scanner(System.in).nextLine();
 
         /*try {
