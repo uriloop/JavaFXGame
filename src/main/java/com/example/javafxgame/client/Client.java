@@ -89,11 +89,24 @@ try {
             serverData= in.readLine();
             System.out.println("i. "+serverData);
 
+
             // confirmem que esperem
             request= "Espero...";
+            out.println(request);
+            out.flush();
             System.out.println("o. "+request);
 
-            //el client atén el port fins que decideix finalitzar
+
+            // mentre no ens envia l'estat del joc amb el nou client, esperem
+            while((serverData= in.readLine()).equals("Espera...")) {
+                System.out.println("i. "+serverData);
+                out.println(request);
+                out.flush();
+            }
+
+
+
+                //el client atén el port fins que decideix finalitzar
             // comencem a enviar json de l'estat del joc quan hi hagi dos players i iniciem joc
             while (continueConnected) {
                 serverData = in.readLine();

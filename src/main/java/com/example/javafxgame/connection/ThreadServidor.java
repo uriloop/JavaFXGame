@@ -1,6 +1,7 @@
 package com.example.javafxgame.connection;
 
 import com.example.javafxgame.data.EstatJoc;
+import com.example.javafxgame.data.PartidaLlesta;
 import com.example.javafxgame.data.Player;
 
 import java.io.*;
@@ -22,9 +23,9 @@ public class ThreadServidor implements Runnable {
     EstatJoc estatJoc;
     int idPropia;
     String nick;
+    PartidaLlesta partidaLlesta;
 
-
-    public ThreadServidor(Socket clientSocket, EstatJoc estatJoc, int numplayersConectats) {
+    public ThreadServidor(Socket clientSocket, EstatJoc estatJoc, int numplayersConectats, PartidaLlesta partidaLlesta) {
         idPropia = numplayersConectats;
         this.estatJoc = estatJoc;
         this.clientSocket = clientSocket;
@@ -36,6 +37,8 @@ public class ThreadServidor implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        this.partidaLlesta=partidaLlesta;
     }
 
     @Override
@@ -63,13 +66,25 @@ public class ThreadServidor implements Runnable {
                 else
                     estatJoc.getPlayers().add(new Player(nick, 100, 600, Player.Direccio.S));
 
-                msgSortint = "Has entrat a una partida " + nick + " Esperant a l'altre jugador...";
+                msgSortint = "Hola " + nick + ". Has entrat a una partida. Esperant a l'altre jugador...";
                 out.println(msgSortint);
                 out.flush();
                 System.out.println("o. "+msgSortint);
-                msgEntrant = in.readLine();
+
+
+            }
+            msgEntrant = in.readLine();
+            while (msgEntrant.equals("Espero...")){
+                System.out.println("i. "+msgEntrant);
+                msgSortint=comprovaJugadorsPreparats() ? estatJoc.getJSON(): "Espera...";
+                out.println(msgSortint);
+                out.flush();
+                System.out.println("o. "+msgSortint);
+                msgEntrant=in.readLine();
             }
 
+
+            // akí hem de rebre el primer json de cada usuari
             while (!acabat) {
                 msgSortint = generarResposta(msgEntrant);
                 out.println(msgSortint);
@@ -85,6 +100,13 @@ public class ThreadServidor implements Runnable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private boolean comprovaJugadorsPreparats() {
+
+        if (partidaLlesta.getPlayersConectats()==2)return true;
+        return false;
+
     }
 
     // juntar tots els msgEntrants dels diferents jugadors, posar en comu i retornar el json amb les posicions
