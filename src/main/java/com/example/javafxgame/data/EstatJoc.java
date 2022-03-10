@@ -41,12 +41,8 @@ public class EstatJoc {
     public void actualitzaServidor(int idDeQuiEnvia, String json) {
         int id= idDeQuiEnvia==0 ? 1 : 2;
 
-        EstatJoc estatJocRebut = null;
-        try {
-            estatJocRebut = new ObjectMapper().readValue(json, EstatJoc.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        EstatJoc estatJocRebut = new JsonClass().getObject(json);
+
 
         // akí tria de dades entre el estatjocRebut i this tenint en compte qui ha enviat en quant al player
         this.getPlayers().get(id).setPosX(estatJocRebut.getPlayers().get(id).getPosX());
@@ -65,16 +61,13 @@ public class EstatJoc {
     public void actualitzaClient(int idClient, String json) {
         //   EstatJoc estatJocRebut=json/*mapped*/;
         // ara actualitzar el estat del joc amb les dades pertinents
-        int id= idClient==0 ? 2 : 1;
+        int id= idClient==0 ? 1 : 0;
 
-        EstatJoc estatJocRebut = null;
-        try {
-            estatJocRebut = new ObjectMapper().readValue(json, EstatJoc.class);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
+        EstatJoc estatJocRebut = new JsonClass().getObject(json);
 
-        // akí tria de dades entre l'estatjocRebut i el propi tenint en compte qui ha enviat la info
+
+
+        // akí tria de dades entre l'estatjocRebut i el propi tenint en compte qui ha enviat en quant al player
         this.getPlayers().get(id).setPosX(estatJocRebut.getPlayers().get(id).getPosX());
         this.getPlayers().get(id).setPosY(estatJocRebut.getPlayers().get(id).getPosY());
         this.getPlayers().get(id).setDireccio(estatJocRebut.getPlayers().get(id).getDireccio());

@@ -15,4 +15,14 @@ public class JsonClass {
         }
         return resposta;
     }
+
+    public EstatJoc getObject(String json) {
+
+        try {
+            return new ObjectMapper().readValue(json, EstatJoc.class);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return  null;
+    }
 }
