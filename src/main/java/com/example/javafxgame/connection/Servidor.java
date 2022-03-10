@@ -27,7 +27,7 @@ public class Servidor {
         this.port = port;
         playersConectats = new ArrayList<>();
         clients = new ArrayList<>();
-        estatJoc = new EstatJoc();
+        estatJoc = new EstatJoc(0);
     }
 
     public void listen() {

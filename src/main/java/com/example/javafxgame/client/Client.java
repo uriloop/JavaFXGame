@@ -32,7 +32,7 @@ public class Client extends Thread {
         this.hostname = hostname;
         this.port = port;
         continueConnected = true;
-        estatJoc= new EstatJoc();
+        estatJoc= new EstatJoc(0);
         this.nick=nick;
 
 

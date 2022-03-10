@@ -17,8 +17,11 @@ public class EstatJoc implements Serializable {
     private List<Player> players;
     private List<BalaEvent> balesDisparades = new ArrayList<>();
 
-
     public EstatJoc() {
+    }
+
+    public EstatJoc(int algo) {
+        players= new ArrayList<>();
     }
 
     public boolean isComenca() {
