@@ -42,7 +42,7 @@ public class EstatJoc implements Serializable {
     // el servidor agafa les dades del player del client i les bales i actualitza l'objecte estatJoc
 
     public void actualitzaServidor(int idDeQuiEnvia, String json) {
-        int id= idDeQuiEnvia==0 ? 1 : 2;
+        int id= idDeQuiEnvia==0 ? 0 : 1;
 
         EstatJoc estatJocRebut = new JsonClass().getObject(json);
 

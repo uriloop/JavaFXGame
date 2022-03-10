@@ -6,6 +6,9 @@ public class Player {
     private String id;
     private BalaEvent bala;
 
+    public Player() {
+    }
+
     private Direccio direccio;
 
     public void setPosY(float posY) {
