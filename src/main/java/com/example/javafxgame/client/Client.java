@@ -104,6 +104,12 @@ try {
                 out.flush();
                 System.out.println("o. "+request);
             }
+            //processament de les dades rebudes i obtenció d'una nova petició
+
+            request = getRequest(serverData);
+            //enviament el número i els intents
+            out.println(request);
+            out.flush();
 
 
 
