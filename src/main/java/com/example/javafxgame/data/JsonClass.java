@@ -1,4 +1,4 @@
-package com.example.javafxgame.connection;
+package com.example.javafxgame.data;
 
 import com.example.javafxgame.data.EstatJoc;
 import com.fasterxml.jackson.core.JsonProcessingException;

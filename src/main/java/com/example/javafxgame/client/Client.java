@@ -9,7 +9,7 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
-import com.example.javafxgame.connection.JsonClass;
+import com.example.javafxgame.data.JsonClass;
 import com.example.javafxgame.data.EstatJoc;
 import com.example.javafxgame.data.Player;
 

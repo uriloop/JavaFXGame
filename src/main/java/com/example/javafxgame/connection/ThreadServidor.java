@@ -1,12 +1,12 @@
 package com.example.javafxgame.connection;
 
 import com.example.javafxgame.data.EstatJoc;
+import com.example.javafxgame.data.JsonClass;
 import com.example.javafxgame.data.PartidaLlesta;
 import com.example.javafxgame.data.Player;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 public class ThreadServidor implements Runnable {
 
@@ -81,7 +81,7 @@ JsonClass json= new JsonClass();
                 msgSortint=comprovaJugadorsPreparats() ? json.getJSON(estatJoc): "Espera...";
                 out.println(msgSortint);
                 out.flush();
-                System.out.println("o. "+msgSortint);
+                System.out.println("o. "+nick+": "+msgSortint);
                 msgEntrant=in.readLine();
             }
 

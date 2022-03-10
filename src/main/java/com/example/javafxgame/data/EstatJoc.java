@@ -74,7 +74,7 @@ public class EstatJoc {
             e.printStackTrace();
         }
 
-        // akí tria de dades entre el estatjocRebut i this tenint en compte qui ha enviat en quant al player
+        // akí tria de dades entre l'estatjocRebut i el propi tenint en compte qui ha enviat la info
         this.getPlayers().get(id).setPosX(estatJocRebut.getPlayers().get(id).getPosX());
         this.getPlayers().get(id).setPosY(estatJocRebut.getPlayers().get(id).getPosY());
         this.getPlayers().get(id).setDireccio(estatJocRebut.getPlayers().get(id).getDireccio());
