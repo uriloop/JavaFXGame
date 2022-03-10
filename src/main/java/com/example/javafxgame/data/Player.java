@@ -11,6 +11,9 @@ public class Player {
 
     private Direccio direccio;
 
+    public Player(float posX, float posY, Direccio direccio) {
+    }
+
     public void setPosY(float posY) {
         this.posY = posY;
     }

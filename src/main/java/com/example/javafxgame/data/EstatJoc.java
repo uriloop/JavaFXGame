@@ -22,6 +22,7 @@ public class EstatJoc implements Serializable {
 
     public EstatJoc(int algo) {
         players= new ArrayList<>();
+
     }
 
     public boolean isComenca() {
@@ -65,15 +66,21 @@ public class EstatJoc implements Serializable {
         //   EstatJoc estatJocRebut=json/*mapped*/;
         // ara actualitzar el estat del joc amb les dades pertinents
         int id= idClient==0 ? 1 : 0;
+        EstatJoc estatJocRebut=null;
+        if (json.substring(0,4).equals("new ")){
+            estatJocRebut = new JsonClass().getObject(json.substring(5,json.length()));
+            players.add(new Player(estatJocRebut.getPlayers().get(id).getPosX(),estatJocRebut.getPlayers().get(id).getPosY(),estatJocRebut.getPlayers().get(id).getDireccio()));
 
-        EstatJoc estatJocRebut = new JsonClass().getObject(json);
+        }else{
+            this.getPlayers().get(id).setPosX(estatJocRebut.getPlayers().get(id).getPosX());
+            this.getPlayers().get(id).setPosY(estatJocRebut.getPlayers().get(id).getPosY());
+            this.getPlayers().get(id).setDireccio(estatJocRebut.getPlayers().get(id).getDireccio());
+        }
 
 
 
         // akí tria de dades entre l'estatjocRebut i el propi tenint en compte qui ha enviat en quant al player
-        this.getPlayers().get(id).setPosX(estatJocRebut.getPlayers().get(id).getPosX());
-        this.getPlayers().get(id).setPosY(estatJocRebut.getPlayers().get(id).getPosY());
-        this.getPlayers().get(id).setDireccio(estatJocRebut.getPlayers().get(id).getDireccio());
+
 
 
 }

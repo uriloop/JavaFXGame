@@ -79,7 +79,8 @@ JsonClass json= new JsonClass();
             while (msgEntrant.equals("Espero...")){
                 System.out.println("i. "+msgEntrant);
                 msgSortint=comprovaJugadorsPreparats() ? json.getJSON(estatJoc): "Espera...";
-                out.println(msgSortint);
+                out.print("new ");
+                out.print(msgSortint);
                 out.flush();
                 System.out.println("o. "+nick+": "+msgSortint);
                 msgEntrant=in.readLine();
