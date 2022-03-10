@@ -3,13 +3,14 @@ package com.example.javafxgame.data;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Classe que instancia totes les variables del joc. Basicament actualitza els estats dels jugadors i s'encarrega dels mapejos
  */
-public class EstatJoc {
+public class EstatJoc implements Serializable {
 
 
     private boolean comenca = false;
@@ -18,7 +19,6 @@ public class EstatJoc {
 
 
     public EstatJoc() {
-        players = new ArrayList<>();
     }
 
     public boolean isComenca() {
