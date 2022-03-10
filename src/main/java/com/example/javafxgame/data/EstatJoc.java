@@ -32,15 +32,7 @@ public class EstatJoc {
     // 1
     // el client envia al servidor:   estat del joc complet mapejat a json, (mapejar objecte estatJoc a json i retornar)
 
-    public String getJSON() {
-String resposta="No s'ha processat el json";
-        try {
-            resposta= new ObjectMapper().writeValueAsString(this);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        return resposta;
-    }
+
 
 
     // 2

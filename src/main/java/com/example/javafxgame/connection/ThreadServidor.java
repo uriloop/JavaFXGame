@@ -74,11 +74,11 @@ public class ThreadServidor implements Runnable {
 
             }
             msgEntrant = in.readLine();
-
+JsonClass json= new JsonClass();
             // aki enviem missatges per comprovar que la comunicació segueix en peu, realment només cal no respondre y dins del while comprovar només si ja estan llestos els jugadors
             while (msgEntrant.equals("Espero...")){
                 System.out.println("i. "+msgEntrant);
-                msgSortint=comprovaJugadorsPreparats() ? estatJoc.getJSON(): "Espera...";
+                msgSortint=comprovaJugadorsPreparats() ? json.getJSON(estatJoc): "Espera...";
                 out.println(msgSortint);
                 out.flush();
                 System.out.println("o. "+msgSortint);
@@ -114,9 +114,9 @@ public class ThreadServidor implements Runnable {
     // juntar tots els msgEntrants dels diferents jugadors, posar en comu i retornar el json amb les posicions
     private String generarResposta(String msgEntrant) {
 
-
+JsonClass json= new JsonClass();
         estatJoc.actualitzaServidor(idPropia, msgEntrant);
-        String resposta = estatJoc.getJSON();
+        String resposta = json.getJSON(estatJoc);
 
         // per monitoritzar el que passa al servidor
         System.out.println("i.  jug_" + nick + ": " + msgEntrant);

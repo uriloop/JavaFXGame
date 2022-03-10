@@ -9,8 +9,8 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Scanner;
 
+import com.example.javafxgame.connection.JsonClass;
 import com.example.javafxgame.data.EstatJoc;
-import com.example.javafxgame.data.JsonClass;
 import com.example.javafxgame.data.Player;
 
 public class Client extends Thread {
@@ -135,8 +135,9 @@ try {
 
     public String getRequest(String recivedDataFromServer) {
 
+        JsonClass json= new JsonClass();
         estatJoc.actualitzaClient(id,recivedDataFromServer);
-        String resposta=estatJoc.getJSON();
+        String resposta=json.getJSON(estatJoc);
         // monitoritzar el que rebem del servidor
         System.out.println("i.  "+recivedDataFromServer);
         /*String responseFromClientToServer;*/
