@@ -4,10 +4,22 @@ public class Player {
 
     private float posY, posX;
     private String id;
-    private BalaEvent bala;
+    /*private BalaEvent bala;*/
 
     public Player() {
     }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+  /*  public BalaEvent getBala() {
+        return bala;
+    }
+
+    public void setBala(BalaEvent bala) {
+        this.bala = bala;
+    }*/
 
     private Direccio direccio;
 
@@ -30,7 +42,7 @@ public class Player {
         N, S, E, W;
     }
 
-    public void dispara(long id,Direccio dir, float x, float y) {  // Els id, aniran de 10 en 10 i sumarem 1 o 0 depenent del player així, si acaba en 1 pertany al segon player, else ...
+   /* public void dispara(long id,Direccio dir, float x, float y) {  // Els id, aniran de 10 en 10 i sumarem 1 o 0 depenent del player així, si acaba en 1 pertany al segon player, else ...
         id=id+Integer.parseInt(this.id);
         bala = new BalaEvent(id,dir, x, y);
     }
@@ -39,7 +51,7 @@ public class Player {
         bala = null;
     }
 
-
+*/
     public Player(String id, float posY, float posX, Direccio direccio) {
         this.id = id;
         this.posY = posY;

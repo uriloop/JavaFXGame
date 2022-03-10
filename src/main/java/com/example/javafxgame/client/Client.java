@@ -32,7 +32,10 @@ public class Client extends Thread {
         this.hostname = hostname;
         this.port = port;
         continueConnected = true;
-        estatJoc= new EstatJoc(0);
+        estatJoc= new EstatJoc();
+        this.estatJoc.getPlayers().add(new Player());
+        this.estatJoc.getPlayers().add(new Player());
+
         this.nick=nick;
 
 
@@ -104,10 +107,10 @@ try {
                 out.flush();
                 System.out.println("o. "+request);
             }
-            //processament de les dades rebudes i obtenció d'una nova petició
+            //processament de les dades rebudes aki rebem el primer json, hem de posicionar els clients
 
             request = getRequest(serverData);
-            //enviament el número i els intents
+
             out.println(request);
             out.flush();
 

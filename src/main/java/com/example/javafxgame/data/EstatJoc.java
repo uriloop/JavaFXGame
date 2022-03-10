@@ -12,25 +12,29 @@ import java.util.List;
  */
 public class EstatJoc implements Serializable {
 
+    // private boolean comenca = false;
 
-    private boolean comenca = false;
-    private List<Player> players;
+    private List<Player> players=new ArrayList<>();
     private List<BalaEvent> balesDisparades = new ArrayList<>();
-
     public EstatJoc() {
     }
 
-    public EstatJoc(int algo) {
-        players= new ArrayList<>();
 
-    }
+/*
 
     public boolean isComenca() {
         return comenca;
-    }
-
+    }*/
     public List<BalaEvent> getBalesDisparades() {
         return balesDisparades;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public void setBalesDisparades(List<BalaEvent> balesDisparades) {
+        this.balesDisparades = balesDisparades;
     }
 ///  ACTUALITZAR ESTAT DEL JOC
     // 1
@@ -66,16 +70,12 @@ public class EstatJoc implements Serializable {
         //   EstatJoc estatJocRebut=json/*mapped*/;
         // ara actualitzar el estat del joc amb les dades pertinents
         int id= idClient==0 ? 1 : 0;
-        EstatJoc estatJocRebut=null;
-        if (json.substring(0,4).equals("new ")){
-            estatJocRebut = new JsonClass().getObject(json.substring(5,json.length()));
-            players.add(new Player(estatJocRebut.getPlayers().get(id).getPosX(),estatJocRebut.getPlayers().get(id).getPosY(),estatJocRebut.getPlayers().get(id).getDireccio()));
+        EstatJoc estatJocRebut=new JsonClass().getObject(json);
 
-        }else{
             this.getPlayers().get(id).setPosX(estatJocRebut.getPlayers().get(id).getPosX());
             this.getPlayers().get(id).setPosY(estatJocRebut.getPlayers().get(id).getPosY());
             this.getPlayers().get(id).setDireccio(estatJocRebut.getPlayers().get(id).getDireccio());
-        }
+
 
 
 
@@ -96,10 +96,10 @@ public class EstatJoc implements Serializable {
     }
     */
 
-
+/*
     public void setComenca(boolean b) {
         comenca = true;
-    }
+    }*/
 
     public List<Player> getPlayers() {
         return players;
@@ -128,9 +128,11 @@ public class EstatJoc implements Serializable {
 
     }
 */
+/*
     public boolean getComenca() {
         return comenca;
     }
+*/
 
   /*  public void actualitzaJoc(int idPropia, String msgEntrant) {
        // players.get(idPropia); // ja tenim el player a qui pertany y el json

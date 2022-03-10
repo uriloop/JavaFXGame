@@ -47,7 +47,7 @@ public class NickController implements Initializable {
 
        TheGameMain game= new TheGameMain(client);
        int i=0;
-       while (!client.getEstatJoc().getComenca()){
+       while (client.getEstatJoc()==null){
            if (i%100==0)System.out.print("-");
            i++;
        }

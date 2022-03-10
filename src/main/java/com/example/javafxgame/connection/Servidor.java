@@ -2,6 +2,7 @@ package com.example.javafxgame.connection;
 
 import com.example.javafxgame.data.EstatJoc;
 import com.example.javafxgame.data.PartidaLlesta;
+import com.example.javafxgame.data.Player;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -27,7 +28,8 @@ public class Servidor {
         this.port = port;
         playersConectats = new ArrayList<>();
         clients = new ArrayList<>();
-        estatJoc = new EstatJoc(0);
+        estatJoc = new EstatJoc();
+
     }
 
     public void listen() {
@@ -39,6 +41,7 @@ public class Servidor {
             while (numplayersConectats <= maxPlayers) { //esperar connexió del client i llançar thread  // si hi ha 2 clients deixa d'esperar conexions
                 clientSocket = serverSocket.accept();
                 //Llançar Thread per establir la comunicació
+
                 playersConectats.add(new ThreadServidor(clientSocket, estatJoc,numplayersConectats,partidaLlesta));
                 clients.add(new Thread(playersConectats.get(numplayersConectats)));
                 partidaLlesta.setPlayersConectats(numplayersConectats+1);
@@ -55,8 +58,10 @@ public class Servidor {
         try {
             clientSocket.close();
             serverSocket.close();
+
         } catch (IOException e) {
             e.printStackTrace();
+
         }
 
     }

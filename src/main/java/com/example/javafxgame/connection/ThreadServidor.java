@@ -54,7 +54,7 @@ public class ThreadServidor implements Runnable {
             msgEntrant = in.readLine();
             System.out.println("i. "+msgEntrant);
             if ((msgEntrant.substring(0, 9)).equals("Conectat!")) {
-// Comprova si és el primer missatge de benvinguda i guarda el nickname
+// Comprova si és el primer missatge de benvinguda i guarda el nickname o posa Player+num si no s'escriu res
 
                 if (msgEntrant.length() > 9) {
                     nick = msgEntrant.substring(9, msgEntrant.length());
@@ -78,8 +78,8 @@ public class ThreadServidor implements Runnable {
             // aki enviem missatges per comprovar que la comunicació segueix en peu, realment només cal no respondre y dins del while comprovar només si ja estan llestos els jugadors
             while (msgEntrant.equals("Espero...")){
                 System.out.println("i. "+msgEntrant);
-                msgSortint=comprovaJugadorsPreparats() ? "new "+json.getJSON(estatJoc): "Espera...";
-                out.print(msgSortint);
+                msgSortint=comprovaJugadorsPreparats() ? json.getJSON(estatJoc): "Espera...";
+                out.println(msgSortint);
                 out.flush();
                 System.out.println("o. "+nick+": "+msgSortint);
                 msgEntrant=in.readLine();
@@ -114,7 +114,7 @@ public class ThreadServidor implements Runnable {
     // juntar tots els msgEntrants dels diferents jugadors, posar en comu i retornar el json amb les posicions
     private String generarResposta(String msgEntrant) {
 
-JsonClass json= new JsonClass();
+        JsonClass json= new JsonClass();
         estatJoc.actualitzaServidor(idPropia, msgEntrant);
         String resposta = json.getJSON(estatJoc);
 
