@@ -5,8 +5,10 @@ import com.example.javafxgame.data.PartidaLlesta;
 import com.example.javafxgame.data.Player;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -33,13 +35,29 @@ public class Servidor {
     }
 
     public void listen() {
+
+        try {
+            System.out.println("*********************************************************");
+            System.out.println("                    SERVIDOR");
+            System.out.println("            Nom servidor: "+InetAddress.getLocalHost().getHostName());
+            System.out.println("            IP servidor: "+InetAddress.getLocalHost().getHostAddress());
+            System.out.println();
+            System.out.println(" i = msgFromClient     o = msgToClient     > = StatusMsg");
+            System.out.println("*********************************************************");
+            System.out.println(">");
+
+        } catch (UnknownHostException e) {
+            e.printStackTrace();
+        }
+
+
         ServerSocket serverSocket = null;
         Socket clientSocket = null;
 
         try {
             serverSocket = new ServerSocket(port);
             while (numplayersConectats <= maxPlayers) { //esperar connexió del client i llançar thread  // si hi ha 2 clients deixa d'esperar conexions
-                System.out.println("SERVIDOR: Escoltant peticions...");
+                System.out.println("> Estic escoltant peticions...");
 
                 clientSocket = serverSocket.accept();
                 //Llançar Thread per establir la comunicació
@@ -53,6 +71,8 @@ public class Servidor {
 
 
             }
+            System.out.println("> Iniciant partida... (Ja no escolto peticions)");
+
         } catch (IOException ex) {
             ex.printStackTrace();
 
