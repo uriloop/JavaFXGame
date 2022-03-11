@@ -24,6 +24,9 @@ public class GameMain extends Application {
        // stage.getIcons().add(new Image(getResource("com/example/javafxgame/img/aburrido.png")));
         stage.show();
 
+
+
+
     }
 
 

@@ -35,6 +35,7 @@ public class TheGameMain extends Application {
 
     public TheGameMain( Client client) {
         this.client=client;
+
     }
 
     private Parent createContent() {
@@ -283,7 +284,7 @@ public class TheGameMain extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        Scene scene = new Scene(createContent());
+        /*Scene scene = new Scene(createContent());
 
 
         // posem a escoltar diferents tecles per als inputs
@@ -291,7 +292,7 @@ public class TheGameMain extends Application {
         scene.setOnKeyPressed(e -> {
             input.add(e.getCode().toString());
         });
-/*
+*//*
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -299,9 +300,9 @@ public class TheGameMain extends Application {
 
             }
         });
-*/
+*//*
 
-       /*  ARREGLAT PER A QUE ACCEPTI VARIES TECLES SIMULTANIES
+       *//*  ARREGLAT PER A QUE ACCEPTI VARIES TECLES SIMULTANIES
 
 
        scene.setOnKeyPressed(e -> {
@@ -344,23 +345,23 @@ e.get¡¡
                     }
                 }
                 case COMMA,ENTER -> {
-                    if (cicles - ciclesDispar > 150 *//*&& carrega*//*) {
-         *//*
+                    if (cicles - ciclesDispar > 150 *//**//*&& carrega*//**//*) {
+         *//**//*
                 }
             }
         });
-*/
+*//*
 
         stage.setScene(scene);
         stage.show();
 
-
+*/
     }
 
-   /* public static void main(String[] args) {
+    public static void main(String[] args) {
 
 
         launch();
 
-    }*/
+    }
 }

@@ -23,6 +23,7 @@ public class Client extends Thread {
     String nick;
     private int id;
     JsonClass json;
+    private boolean inicia=false;
 
     public EstatJoc getEstatJoc() {
         return estatJoc;
@@ -73,14 +74,16 @@ try {
 
             if (serverData.equals("0")){
                 this.id=0;
-                player= new Player(nick, 100,100, Player.Direccio.S);
+                getEstatJoc().getPlayers().set(this.id,new Player(nick, 100,100, Player.Direccio.S));
+
                 System.out.println("Conexió establerta amb el servidor. Ets el player 1");
             }else if (serverData.equals("1")){
                 this.id=1;
-                player= new Player(nick, 100,600, Player.Direccio.S);
+                getEstatJoc().getPlayers().set(this.id,new Player(nick, 100,600, Player.Direccio.S));
+
                 System.out.println("Conexió establerta amb el servidor. Ets el player 2");
             }else{
-                System.out.println("T'has deixat una opció possible sense gestionar!!  Client.class");
+                System.out.println("ServerData retorna un numero major de 1!!  Client.class");
             }
             // enviem el nick
             request="Conectat!"+nick;
@@ -107,12 +110,13 @@ try {
                 out.flush();
                 System.out.println("o. "+request);
             }
-            //processament de les dades rebudes aki rebem el primer json, hem de posicionar els clients
+            //processament de les dades rebudes aki rebem el primer json, hem de posicionar els players
 
             request = getRequest(serverData);
 
             out.println(request);
             out.flush();
+            inicia=true;
 
 
 
@@ -134,6 +138,8 @@ try {
 
     }
 
+
+
     // Tractem la rebuda de dades
 
     public String getRequest(String recivedDataFromServer) {
@@ -151,7 +157,7 @@ try {
         }*/
 
         System.out.println("o. "+resposta);
-        return  new Scanner(System.in).nextLine();
+        return resposta;
 
         /*try {
             responseFromClientToServer = new ObjectMapper().writeValueAsString(playerClient);
@@ -197,6 +203,10 @@ try {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public boolean getInicia() {
+        return  inicia;
     }
 
   /*  public static void main(String[] args) {

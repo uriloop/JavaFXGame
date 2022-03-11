@@ -20,7 +20,7 @@ public class NickController implements Initializable {
     private Stage stage;
     private Scene scene;
 
-    private String nick="";
+    private String nick;
 
     @FXML
     TextField nomField;
@@ -39,15 +39,15 @@ public class NickController implements Initializable {
     @FXML
     private void startMenuSala() {
        nick=nomField.getText();
-
+        nick=nick.length()<1? "player":nick;
 
         Client client= new Client("localhost",5555,nick);
 
-        client.run();
+        client.start();
 
        TheGameMain game= new TheGameMain(client);
        int i=0;
-       while (client.getEstatJoc()==null){
+       while (!client.getInicia()){
            if (i%100==0)System.out.print("-");
            i++;
        }

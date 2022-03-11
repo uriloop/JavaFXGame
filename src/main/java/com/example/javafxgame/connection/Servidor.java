@@ -39,6 +39,8 @@ public class Servidor {
         try {
             serverSocket = new ServerSocket(port);
             while (numplayersConectats <= maxPlayers) { //esperar connexió del client i llançar thread  // si hi ha 2 clients deixa d'esperar conexions
+                System.out.println("SERVIDOR: Escoltant peticions...");
+
                 clientSocket = serverSocket.accept();
                 //Llançar Thread per establir la comunicació
 

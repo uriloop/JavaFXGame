@@ -14,17 +14,18 @@ public class EstatJoc implements Serializable {
 
     // private boolean comenca = false;
 
-    private List<Player> players=new ArrayList<>();
+    private List<Player> players = new ArrayList<>();
     private List<BalaEvent> balesDisparades = new ArrayList<>();
+
     public EstatJoc() {
     }
 
 
-/*
+    /*
 
-    public boolean isComenca() {
-        return comenca;
-    }*/
+        public boolean isComenca() {
+            return comenca;
+        }*/
     public List<BalaEvent> getBalesDisparades() {
         return balesDisparades;
     }
@@ -41,22 +42,18 @@ public class EstatJoc implements Serializable {
     // el client envia al servidor:   estat del joc complet mapejat a json, (mapejar objecte estatJoc a json i retornar)
 
 
-
-
     // 2
     // el servidor agafa les dades del player del client i les bales i actualitza l'objecte estatJoc
 
     public void actualitzaServidor(int idDeQuiEnvia, String json) {
-        int id= idDeQuiEnvia==0 ? 0 : 1;
+
 
         EstatJoc estatJocRebut = new JsonClass().getObject(json);
-
-
         // akí tria de dades entre el estatjocRebut i this tenint en compte qui ha enviat en quant al player
-        this.getPlayers().get(id).setPosX(estatJocRebut.getPlayers().get(id).getPosX());
-        this.getPlayers().get(id).setPosY(estatJocRebut.getPlayers().get(id).getPosY());
-        this.getPlayers().get(id).setDireccio(estatJocRebut.getPlayers().get(id).getDireccio());
-
+        this.getPlayers().get(idDeQuiEnvia).setPosX(estatJocRebut.getPlayers().get(idDeQuiEnvia).getPosX());
+        this.getPlayers().get(idDeQuiEnvia).setPosY(estatJocRebut.getPlayers().get(idDeQuiEnvia).getPosY());
+        this.getPlayers().get(idDeQuiEnvia).setDireccio(estatJocRebut.getPlayers().get(idDeQuiEnvia).getDireccio());
+        // actualitzem les dades del jugador que ens ha enviat el json.
         // comprovem la llista de bales en busca de bales noves
 
         // he de fer un stream o varios:   quedar-me amb les noves i generar-les al joc...   afegir-les a la llista propia de bales
@@ -69,21 +66,20 @@ public class EstatJoc implements Serializable {
     public void actualitzaClient(int idClient, String json) {
         //   EstatJoc estatJocRebut=json/*mapped*/;
         // ara actualitzar el estat del joc amb les dades pertinents
-        int id= idClient==0 ? 1 : 0;
-        EstatJoc estatJocRebut=new JsonClass().getObject(json);
+        int id = idClient == 0 ? 1 : 0;
+        EstatJoc estatJocRebut = new JsonClass().getObject(json);
 
-            this.getPlayers().get(id).setPosX(estatJocRebut.getPlayers().get(id).getPosX());
-            this.getPlayers().get(id).setPosY(estatJocRebut.getPlayers().get(id).getPosY());
-            this.getPlayers().get(id).setDireccio(estatJocRebut.getPlayers().get(id).getDireccio());
-
-
-
-
-        // akí tria de dades entre l'estatjocRebut i el propi tenint en compte qui ha enviat en quant al player
+        this.getPlayers().get(id).setPosX(estatJocRebut.getPlayers().get(id).getPosX());
+        this.getPlayers().get(id).setPosY(estatJocRebut.getPlayers().get(id).getPosY());
+        this.getPlayers().get(id).setDireccio(estatJocRebut.getPlayers().get(id).getDireccio());
+        this.getPlayers().get(id).setId(estatJocRebut.getPlayers().get(id).getId());
 
 
+        // akí tria de dades entre l'estatjocRebut i el propi tenint en compte qui ha enviat en quant al player.
+        // actualitzem les dades de l'altre jugador.
 
-}
+
+    }
 
 // 4
 // tots mapegen i desmapegen el mateix objecte a un objecte temporal del mateix tipus per a triar les dades que requereix cada "dispositiu" serv. i clients
@@ -106,11 +102,11 @@ public class EstatJoc implements Serializable {
     }
 
     /* *//**
- * Actualitza l'estat del joc amb la info que envia el client sobre la seva posicio
- *
- * @param msgEntrant Json amb l'estat del player client
- * @return retorna un Json amb tot l'estat del joc per enviar-lo als clients
- *//*
+     * Actualitza l'estat del joc amb la info que envia el client sobre la seva posicio
+     *
+     * @param msgEntrant Json amb l'estat del player client
+     * @return retorna un Json amb tot l'estat del joc per enviar-lo als clients
+     *//*
     public void actualitzaPlayer(int idPropia,String msgEntrant) {
         // mapejar el json a player i a traves de la id igualar aquest player al player pertinent
 
