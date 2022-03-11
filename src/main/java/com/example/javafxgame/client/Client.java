@@ -7,11 +7,13 @@ import java.io.PrintStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.Scanner;
 
+import com.example.javafxgame.TheGameMain;
 import com.example.javafxgame.data.JsonClass;
 import com.example.javafxgame.data.EstatJoc;
 import com.example.javafxgame.data.Player;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 public class Client extends Thread {
 
@@ -22,21 +24,21 @@ public class Client extends Thread {
     EstatJoc estatJoc;
     String nick;
     private int id;
-    JsonClass json;
+    private JsonClass json;
     private boolean inicia=false;
-
+    Stage stage;
     public EstatJoc getEstatJoc() {
         return estatJoc;
     }
 
-    public Client(String hostname, int port,String nick) {
+    public Client(String hostname, int port, String nick, Stage stage) {
         this.hostname = hostname;
         this.port = port;
         continueConnected = true;
         estatJoc= new EstatJoc();
         this.estatJoc.getPlayers().add(new Player());
         this.estatJoc.getPlayers().add(new Player());
-
+    this.stage=stage;
         this.nick=nick;
 
 
@@ -116,18 +118,19 @@ try {
 
             out.println(request);
             out.flush();
-            inicia=true;
 
-
+            Application.launch(TheGameMain.class);
 
             // comencem a enviar json de l'estat del joc quan hi hagi dos players i iniciem joc
             while (continueConnected) {
                 serverData = in.readLine();
+
                 //processament de les dades rebudes i obtenció d'una nova petició
                 request = getRequest(serverData);
                 //enviament el número i els intents
                 out.println(request);
                 out.flush();
+                inicia=true;
             }
             close(socket);
         } catch (UnknownHostException ex) {

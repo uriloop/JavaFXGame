@@ -1,7 +1,6 @@
 package com.example.javafxgame;
 
 import com.example.javafxgame.client.Client;
-import javafx.beans.value.ObservableListValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -28,14 +27,14 @@ public class MenuController implements Initializable {
 
 
     String nick= "";
-    Client client= new Client("localhost", 5555,nick);
+    //Client client= new Client("localhost", 5555,nick, stage);
 
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        client.start();
+        //client.start();
 
 
 

@@ -29,8 +29,6 @@ public class NickController implements Initializable {
     Button startButton;
 
 
-
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
@@ -38,25 +36,26 @@ public class NickController implements Initializable {
 
     @FXML
     private void startMenuSala() {
-       nick=nomField.getText();
-        nick=nick.length()<1? "player":nick;
+        nick = nomField.getText();
+        nick = nick.length() < 1 ? "player" : nick;
 
-        Client client= new Client("localhost",5555,nick);
+        Client client = new Client("localhost", 5555, nick, (Stage) startButton.getScene().getWindow());
 
         client.start();
 
-       TheGameMain game= new TheGameMain(client);
-       int i=0;
-       while (!client.getInicia()){
-           if (i%100==0)System.out.print("-");
-           i++;
-       }
 
-        try {
-            game.start(stage);
-        } catch (Exception e) {
-            e.printStackTrace();
+        while (!client.getInicia()) {
+// esperem a que es conectin els dos clients i el servidor
         }
+
+
+        // s'ha de    passar el client al joc.  iniciar el joc. diferent stage no pilla i com li passo el client? i a una escena?
+
+        // si li passo el joc, ja té el client...
+    /*    TheGameMain game = new TheGameMain(client);*/
+        // el joc el llança el client?
+
+
 
 
 

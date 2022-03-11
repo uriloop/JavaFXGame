@@ -6,6 +6,7 @@ import com.example.javafxgame.data.Player;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
@@ -15,8 +16,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
 public class TheGameMain extends Application {
@@ -284,7 +287,9 @@ public class TheGameMain extends Application {
     @Override
     public void start(Stage stage) throws Exception {
 
-        /*Scene scene = new Scene(createContent());
+
+
+        Scene scene = new Scene(createContent());
 
 
         // posem a escoltar diferents tecles per als inputs
@@ -292,7 +297,7 @@ public class TheGameMain extends Application {
         scene.setOnKeyPressed(e -> {
             input.add(e.getCode().toString());
         });
-*//*
+
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -300,9 +305,10 @@ public class TheGameMain extends Application {
 
             }
         });
-*//*
 
-       *//*  ARREGLAT PER A QUE ACCEPTI VARIES TECLES SIMULTANIES
+/*
+
+        // ARREGLAT PER A QUE ACCEPTI VARIES TECLES SIMULTANIES
 
 
        scene.setOnKeyPressed(e -> {
@@ -345,23 +351,21 @@ e.get¡¡
                     }
                 }
                 case COMMA,ENTER -> {
-                    if (cicles - ciclesDispar > 150 *//**//*&& carrega*//**//*) {
-         *//**//*
+                    if (cicles - ciclesDispar > 150 && carrega) {
+
                 }
             }
         });
-*//*
+*/
+
 
         stage.setScene(scene);
         stage.show();
 
-*/
     }
 
-    public static void main(String[] args) {
 
 
-        launch();
 
-    }
+
 }
